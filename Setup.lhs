@@ -28,8 +28,9 @@ main = defaultMainWithHooks simpleUserHooks {
 
 mysqlConfigProgram = (simpleProgram "mysql_config") {
     programFindLocation = \verbosity _ -> do
-      mysql_config  <- findProgramLocation verbosity "mysql_config" 
-      mysql_config5 <- findProgramLocation verbosity "mysql_config5"
+      let f v = findProgramOnSearchPath v defaultProgramSearchPath
+      mysql_config  <- f verbosity "mysql_config"
+      mysql_config5 <- f verbosity "mysql_config5"
       return (mysql_config `mplus` mysql_config5)
   }
 
